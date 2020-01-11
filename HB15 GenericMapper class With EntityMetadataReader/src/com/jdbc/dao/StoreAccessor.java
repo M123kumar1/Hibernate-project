@@ -33,7 +33,7 @@ public class StoreAccessor {
 			con = JndiConnectionFactory.newConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(GET_STORE_QUERY);
-			Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\store.properties");
+			Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
 
 			while (rs.next()) {
 				Store store = (Store) GenericMapper.mapRowToObject(rs, "com.jdbc.beans.Store", props);
@@ -56,7 +56,7 @@ public class StoreAccessor {
 			stmt = con.prepareStatement(GET_STORE_BY_STORE_NO_QUERY);
 			stmt.setInt(1, storeNo);
 			rs = stmt.executeQuery();
-			Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\store.properties");
+			Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
 			if (rs.next()) {
 				store = new Store();
 				store = (Store) GenericMapper.mapRowToObject(rs, "com.jdbc.beans.Store", props);
