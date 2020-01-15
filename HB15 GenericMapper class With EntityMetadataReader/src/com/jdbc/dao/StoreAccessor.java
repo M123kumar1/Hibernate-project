@@ -42,6 +42,7 @@ public class StoreAccessor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return storeList;
 
 	}
