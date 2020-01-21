@@ -16,8 +16,15 @@ public class QueryTest {
 		entityMetaData.setPkColumn("store_number");
 		entityMetaData.setTableName("store");
 		entityMetaData.setColToAttributeProps(props);
-		String sqlSelectObject = SQLPreparator.sqlSaveObject(entityMetaData);
+		String sqlSelectObject = SQLPreparator.sqlDeleteObject(entityMetaData);
 		System.out.println(sqlSelectObject);
+		
+		
+		/*entityMetaData.setPkColumn("store_number");
+		entityMetaData.setTableName("store");
+		entityMetaData.setColToAttributeProps(props);
+		String sqlSelectObject = SQLPreparator.sqlSaveObject(entityMetaData);
+		System.out.println(sqlSelectObject);*/
 		
 		/*entityMetaData.setPkColumn("store_number");
 		entityMetaData.setTableName("store");

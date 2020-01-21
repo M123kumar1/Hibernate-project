@@ -76,8 +76,19 @@ public class SQLPreparator {
 		buffer.append(")");
 		return buffer.toString();
 	}
+	public static String sqlDeleteObject(EntityMetaData entityMetaData) {
+		StringBuffer buffer=null;
+		
+		buffer=new StringBuffer();
+		buffer.append("delete from ").append(entityMetaData.getTableName()).append(" where ").append(entityMetaData.getPkColumn()).append("=?");
+		
+		return buffer.toString();
+	}
 }
+//delete from store where store_number=?
+
 //INSERT INTO STORE(store_number,store_name,contact_number,email_address,address_line1,
 //address_line2,city,state,zip,country) values(?,?,?,?,?,?,?,?,?,?)
+
 //select store_number,store_name,contact_number,email_address,address_line1,address_line2,
 //city,state,zip,country from store

@@ -8,8 +8,12 @@ import com.jdbc.dao.StoreDAO;
 public class StoreTest {
 	public static void main(String[] args) {
 		StoreDAO storeAccessor = new StoreDAO();
-		
 		Store store=new Store();
+		
+		storeAccessor.deleteStore("9703557877");
+		System.out.println("Store Deleted ...");
+		
+		/*Store store=new Store();
 		store.setStoreNumber("5126");
 		store.setStoreName("Inorbit Mall");
 		store.setContactNumber("9703557877");
@@ -21,7 +25,7 @@ public class StoreTest {
 		store.setZip("500040");
 		store.setCountry("India");
 		int updateStore = storeAccessor.saveStore(store);
-		System.out.println(updateStore+" Record Inserted");		
+		System.out.println(updateStore+" Record Inserted");	*/	
 		
 		/*Store store=new Store();
 		store.setStoreNumber("5123");

@@ -1,5 +1,6 @@
 package com.jdbc.dao;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -142,5 +143,27 @@ public class StoreDAO {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	public void deleteStore(String storeNumber) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		Properties props=null;
+		EntityMetaData entityMetaData=null;
+		int count = 0;
+		try {
+			connection = JndiConnectionFactory.newConnection();
+			entityMetaData=new EntityMetaData();
+			props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
+			entityMetaData.setPkColumn("store_number");
+			entityMetaData.setTableName("store");
+			entityMetaData.setColToAttributeProps(props);
+			String sql = SQLPreparator.sqlDeleteObject(entityMetaData);
+			ps=connection.prepareStatement(sql);
+			ps.setString(1, storeNumber);
+			ps.executeUpdate();
+		}catch(SQLException | NamingException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
