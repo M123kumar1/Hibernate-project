@@ -13,7 +13,7 @@ public class StoreTest {
 		/*storeAccessor.deleteStore("5126");
 		System.out.println("Store Deleted ...");*/
 		
-		//save store
+		/*//save store
 		Store store=new Store();
 		store.setStoreNumber("5126");
 		store.setStoreName("Inorbit Mall");
@@ -26,11 +26,11 @@ public class StoreTest {
 		store.setZip("500040");
 		store.setCountry("India");
 		int updateStore = storeAccessor.saveStore(store);
-		System.out.println(updateStore+" Record Inserted");	
+		System.out.println(updateStore+" Record Inserted");	*/
 		
 		//update store
-		/*Store store=new Store();
-		store.setStoreNumber("5123");
+		Store store=new Store();
+		store.setStoreNumber("5126");
 		store.setStoreName("Next Galeria");
 		store.setContactNumber("9703557877");
 		store.setEmailAddress("croma@pepperfry.com");
@@ -41,7 +41,7 @@ public class StoreTest {
 		store.setZip("500038");
 		store.setCountry("India");
 		int updateStore = storeAccessor.updateStore(store);
-		System.out.println(updateStore+" Record updated");*/
+		System.out.println(updateStore+" Record updated");
 		
 		
 		/*Store store = storeAccessor.getStore(5123); 

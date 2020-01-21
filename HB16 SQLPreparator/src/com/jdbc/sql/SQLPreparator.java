@@ -83,11 +83,16 @@ public class SQLPreparator {
 		buffer.append("update ").append(entityMetaData.getTableName()).append(" set ");
 		for (Object key : entityMetaData.getColToAttributeProps().keySet()) {
 			String columnName = (String) key;
-			if (isFirst) {
-				isFirst=false;
+			if (columnName.equals(entityMetaData.getPkColumn())) {
+
 				continue;
 			} else {
-				buffer.append(",").append(columnName).append("=?");
+				if (isFirst) {
+					buffer.append(columnName).append("=?");
+					isFirst = false;
+				} else {
+					buffer.append(",").append(columnName).append("=?");
+				}
 			}
 		}
 		buffer.append(" where ").append(entityMetaData.getPkColumn()).append("=?");
