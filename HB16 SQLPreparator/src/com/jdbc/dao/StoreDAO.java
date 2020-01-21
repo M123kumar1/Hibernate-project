@@ -21,9 +21,9 @@ import com.jdbc.mapper.GenericMapper;
 import com.jdbc.sql.SQLPreparator;
 
 public class StoreDAO {
-	private static final String INSERT_STORE_QUERY = "INSERT INTO STORE(store_number,store_name,contact_number,email_address,address_line1,address_line2,city,state,zip,country) values(?,?,?,?,?,?,?,?,?,?)";
-	private static final String GET_STORE_QUERY="select * from store";
-	private static final String GET_STORE_BY_STORE_NO_QUERY="select * from store where store_number=?";
+	//private static final String INSERT_STORE_QUERY = "INSERT INTO STORE(store_number,store_name,contact_number,email_address,address_line1,address_line2,city,state,zip,country) values(?,?,?,?,?,?,?,?,?,?)";
+	//private static final String GET_STORE_QUERY="select * from store";
+	//private static final String GET_STORE_BY_STORE_NO_QUERY="select * from store where store_number=?";
 	private static final String UPDATE_STORE_QUERY="UPDATE STORE SET store_name=?,contact_number=?,email_address=?,address_line1=?,address_line2=?,city=?,state=?,zip=?,country=? where store_number=?";
 	
 	public List<Store> getStores() {
@@ -61,12 +61,20 @@ public class StoreDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Store store = null;
+		EntityMetaData entityMetaData=null;
+		Properties props=null;
 		try {
 			con = LocalConnectionFactory.newConnection();
-			stmt = con.prepareStatement(GET_STORE_BY_STORE_NO_QUERY);
+			entityMetaData = new EntityMetaData();
+			props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
+			entityMetaData.setPkColumn("store_number");
+			entityMetaData.setTableName("store");
+			entityMetaData.setColToAttributeProps(props);
+			String sql = SQLPreparator.sqlSelectObjectByPkColumn(entityMetaData);
+			
+			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, storeNo);
 			rs = stmt.executeQuery();
-			Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
 			if (rs.next()) {
 				store = new Store();
 				store = (Store) GenericMapper.mapRowToObject(rs, "com.jdbc.beans.Store", props);
@@ -81,10 +89,19 @@ public class StoreDAO {
 	public int saveStore(Store store) {
 		Connection connection = null;
 		PreparedStatement ps = null;
+		Properties props=null;
+		EntityMetaData entityMetaData=null;
 		int count = 0;
 		try {
 			connection = JndiConnectionFactory.newConnection();
-			ps = connection.prepareStatement(INSERT_STORE_QUERY);
+			entityMetaData=new EntityMetaData();
+			props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
+			entityMetaData.setPkColumn("store_number");
+			entityMetaData.setTableName("store");
+			entityMetaData.setColToAttributeProps(props);
+			String sql = SQLPreparator.sqlSaveObject(entityMetaData);
+			
+			ps = connection.prepareStatement(sql);
 			ps.setString(1, store.getStoreNumber());
 			ps.setString(2, store.getStoreName());
 			ps.setString(3, store.getContactNumber());

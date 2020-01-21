@@ -25,6 +25,59 @@ public class SQLPreparator {
 		buffer.append(" from ").append(entityMetaData.getTableName());
 		return buffer.toString();
 	}
+	public static String sqlSelectObjectByPkColumn(EntityMetaData entityMetaData) {
+		StringBuffer buffer=null;
+		boolean isFirst=true;
+		
+		buffer=new StringBuffer();
+		buffer.append("select ");
+		
+		for(Object key:entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName=(String) key;
+			if(isFirst) {
+				buffer.append(columnName);
+				isFirst=false;
+			}
+			else {
+				buffer.append(",").append(columnName);
+			}
+		}
+		buffer.append(" from ").append(entityMetaData.getTableName()).append(" where ").append(entityMetaData.getPkColumn()).append("=?");
+		return buffer.toString();
+	}
+	public static String sqlSaveObject(EntityMetaData entityMetaData) {
+		StringBuffer buffer=null;
+		boolean isFirst=true;
+		
+		buffer=new StringBuffer();
+		buffer.append("insert into ").append(entityMetaData.getTableName()).append("(");
+		
+		for(Object key:entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName=(String) key;
+			if(isFirst) {
+				buffer.append(columnName);
+				isFirst=false;
+			}
+			else {
+				buffer.append(",").append(columnName);
+			}
+		}
+		buffer.append(")").append(" values(");
+		isFirst=true;
+		for(int i=0;i<entityMetaData.getColToAttributeProps().size();i++) {
+			if(isFirst) {
+				buffer.append("?");
+				isFirst=false;
+			}
+			else {
+				buffer.append(",?");
+			}
+		}
+		buffer.append(")");
+		return buffer.toString();
+	}
 }
+//INSERT INTO STORE(store_number,store_name,contact_number,email_address,address_line1,
+//address_line2,city,state,zip,country) values(?,?,?,?,?,?,?,?,?,?)
 //select store_number,store_name,contact_number,email_address,address_line1,address_line2,
 //city,state,zip,country from store

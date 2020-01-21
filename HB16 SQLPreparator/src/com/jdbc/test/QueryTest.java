@@ -12,11 +12,23 @@ public class QueryTest {
 		EntityMetaData entityMetaData=new EntityMetaData();
 		
 		Properties props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
-		//entityMetaData.setPkColumn("store_number");
+		
+		entityMetaData.setPkColumn("store_number");
 		entityMetaData.setTableName("store");
 		entityMetaData.setColToAttributeProps(props);
-		String sqlSelectObject = SQLPreparator.sqlSelectObject(entityMetaData);
+		String sqlSelectObject = SQLPreparator.sqlSaveObject(entityMetaData);
 		System.out.println(sqlSelectObject);
+		
+		/*entityMetaData.setPkColumn("store_number");
+		entityMetaData.setTableName("store");
+		entityMetaData.setColToAttributeProps(props);
+		String sqlSelectObject = SQLPreparator.sqlSelectObjectByPkColumn(entityMetaData);
+		System.out.println(sqlSelectObject);*/
+		
+		/*entityMetaData.setTableName("store");
+		entityMetaData.setColToAttributeProps(props);
+		String sqlSelectObject = SQLPreparator.sqlSelectObject(entityMetaData);
+		System.out.println(sqlSelectObject);*/
 	}
 
 }
