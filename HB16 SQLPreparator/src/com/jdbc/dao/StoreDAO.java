@@ -103,16 +103,16 @@ public class StoreDAO {
 			String sql = SQLPreparator.sqlSaveObject(entityMetaData);
 			
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, store.getStoreNumber());
-			ps.setString(2, store.getStoreName());
-			ps.setString(3, store.getContactNumber());
-			ps.setString(4, store.getEmailAddress());
-			ps.setString(5, store.getAddressLine1());
-			ps.setString(6, store.getAddressLine2());
+			ps.setString(3, store.getStoreNumber());
+			ps.setString(4, store.getStoreName());
+			ps.setString(6, store.getContactNumber());
+			ps.setString(8, store.getEmailAddress());
+			ps.setString(10, store.getAddressLine1());
+			ps.setString(9, store.getAddressLine2());
 			ps.setString(7, store.getCity());
-			ps.setString(8, store.getState());
-			ps.setString(9, store.getZip());
-			ps.setString(10, store.getCountry());
+			ps.setString(1, store.getState());
+			ps.setString(2, store.getZip());
+			ps.setString(5, store.getCountry());
 			count = ps.executeUpdate();
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -123,10 +123,19 @@ public class StoreDAO {
 	public int updateStore(Store store) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		Properties props=null;
+		EntityMetaData entityMetaData=null;
 		int count=0;
 		try {
 			con=JndiConnectionFactory.newConnection();
-			pstmt=con.prepareStatement(UPDATE_STORE_QUERY);
+			entityMetaData=new EntityMetaData();
+			props = EntityMetaDataReader.readEntityMetaData("com\\jdbc\\common\\Store.properties");
+			entityMetaData.setPkColumn("store_number");
+			entityMetaData.setTableName("store");
+			entityMetaData.setColToAttributeProps(props);
+			String sql = SQLPreparator.sqlUpdateObject(entityMetaData);
+			
+			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1, store.getStoreName());
 			pstmt.setString(2, store.getContactNumber());

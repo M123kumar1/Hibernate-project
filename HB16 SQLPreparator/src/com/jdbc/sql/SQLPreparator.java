@@ -6,82 +6,104 @@ import com.jdbc.beans.EntityMetaData;
 
 public class SQLPreparator {
 	public static String sqlSelectObject(EntityMetaData entityMetaData) {
-		StringBuffer buffer=null;
-		boolean isFirst=true;
-		
-		buffer=new StringBuffer();
+		StringBuffer buffer = null;
+		boolean isFirst = true;
+
+		buffer = new StringBuffer();
 		buffer.append("select ");
-		
-		for(Object key:entityMetaData.getColToAttributeProps().keySet()) {
-			String columnName=(String) key;
-			if(isFirst) {
+
+		for (Object key : entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName = (String) key;
+			if (isFirst) {
 				buffer.append(columnName);
-				isFirst=false;
-			}
-			else {
+				isFirst = false;
+			} else {
 				buffer.append(",").append(columnName);
 			}
 		}
 		buffer.append(" from ").append(entityMetaData.getTableName());
 		return buffer.toString();
 	}
+
 	public static String sqlSelectObjectByPkColumn(EntityMetaData entityMetaData) {
-		StringBuffer buffer=null;
-		boolean isFirst=true;
-		
-		buffer=new StringBuffer();
+		StringBuffer buffer = null;
+		boolean isFirst = true;
+
+		buffer = new StringBuffer();
 		buffer.append("select ");
-		
-		for(Object key:entityMetaData.getColToAttributeProps().keySet()) {
-			String columnName=(String) key;
-			if(isFirst) {
+
+		for (Object key : entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName = (String) key;
+			if (isFirst) {
 				buffer.append(columnName);
-				isFirst=false;
-			}
-			else {
+				isFirst = false;
+			} else {
 				buffer.append(",").append(columnName);
 			}
 		}
-		buffer.append(" from ").append(entityMetaData.getTableName()).append(" where ").append(entityMetaData.getPkColumn()).append("=?");
+		buffer.append(" from ").append(entityMetaData.getTableName()).append(" where ")
+				.append(entityMetaData.getPkColumn()).append("=?");
 		return buffer.toString();
 	}
+
 	public static String sqlSaveObject(EntityMetaData entityMetaData) {
-		StringBuffer buffer=null;
-		boolean isFirst=true;
-		
-		buffer=new StringBuffer();
+		StringBuffer buffer = null;
+		boolean isFirst = true;
+
+		buffer = new StringBuffer();
 		buffer.append("insert into ").append(entityMetaData.getTableName()).append("(");
-		
-		for(Object key:entityMetaData.getColToAttributeProps().keySet()) {
-			String columnName=(String) key;
-			if(isFirst) {
+
+		for (Object key : entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName = (String) key;
+			if (isFirst) {
 				buffer.append(columnName);
-				isFirst=false;
-			}
-			else {
+				isFirst = false;
+			} else {
 				buffer.append(",").append(columnName);
 			}
 		}
 		buffer.append(")").append(" values(");
-		isFirst=true;
-		for(int i=0;i<entityMetaData.getColToAttributeProps().size();i++) {
-			if(isFirst) {
+		isFirst = true;
+		for (int i = 0; i < entityMetaData.getColToAttributeProps().size(); i++) {
+			if (isFirst) {
 				buffer.append("?");
-				isFirst=false;
-			}
-			else {
+				isFirst = false;
+			} else {
 				buffer.append(",?");
 			}
 		}
 		buffer.append(")");
 		return buffer.toString();
 	}
+
+	public static String sqlUpdateObject(EntityMetaData entityMetaData) {
+		StringBuffer buffer = null;
+		boolean isFirst = true;
+		buffer = new StringBuffer();
+		buffer.append("update ").append(entityMetaData.getTableName()).append(" set ");
+		for (Object key : entityMetaData.getColToAttributeProps().keySet()) {
+			String columnName = (String) key;
+			if (isFirst) {
+				isFirst=false;
+				continue;
+			} else {
+				buffer.append(",").append(columnName).append("=?");
+			}
+		}
+		buffer.append(" where ").append(entityMetaData.getPkColumn()).append("=?");
+		return buffer.toString();
+	}
+
+	// UPDATE STORE SET
+	// store_name=?,contact_number=?,email_address=?,address_line1=?,
+	// address_line2=?,city=?,state=?,zip=?,country=? where store_number=?
 	public static String sqlDeleteObject(EntityMetaData entityMetaData) {
-		StringBuffer buffer=null;
-		
-		buffer=new StringBuffer();
-		buffer.append("delete from ").append(entityMetaData.getTableName()).append(" where ").append(entityMetaData.getPkColumn()).append("=?");
-		
+		StringBuffer buffer = null;
+
+		buffer = new StringBuffer();
+		buffer.append("delete from ").append(entityMetaData.getTableName()).append(" where ")
+				.append(entityMetaData.getPkColumn()).append("=?");
+
 		return buffer.toString();
 	}
 }
